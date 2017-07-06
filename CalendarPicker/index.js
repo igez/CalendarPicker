@@ -186,6 +186,8 @@ export default class CalendarPicker extends Component {
       months,
       previousTitle,
       nextTitle,
+	  previousElement,
+	  nextElement,
       textStyle,
     } = this.props;
 
@@ -205,6 +207,8 @@ export default class CalendarPicker extends Component {
             months={months}
             previousTitle={previousTitle}
             nextTitle={nextTitle}
+			previousElement={previousElement}
+            nextElement={nextElement}
             textStyle={textStyle}
           />
           <Weekdays

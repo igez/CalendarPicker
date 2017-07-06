@@ -17,6 +17,8 @@ export default function HeaderControls(props) {
     months,
     previousTitle,
     nextTitle,
+	previousElement,
+    nextElement,
     textStyle,
   } = props;
   const MONTHS = months? months : Utils.MONTHS; // English Month Array
@@ -32,6 +34,7 @@ export default function HeaderControls(props) {
       <View style={styles.monthSelector}>
         <Controls
           label={previous}
+		  element={previousElement}
           onPressControl={onPressPrevious}
           styles={styles.prev}
           textStyles={textStyle}
@@ -45,6 +48,7 @@ export default function HeaderControls(props) {
       <View style={styles.monthSelector}>
         <Controls
           label={next}
+		  element={nextElement}
           onPressControl={onPressNext}
           styles={styles.next}
           textStyles={textStyle}
