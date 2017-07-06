@@ -189,6 +189,8 @@ export default class CalendarPicker extends Component {
 	  previousElement,
 	  nextElement,
       textStyle,
+      headerStyle,
+      headerTextStyle,
     } = this.props;
 
     return (
@@ -210,6 +212,8 @@ export default class CalendarPicker extends Component {
 			previousElement={previousElement}
             nextElement={nextElement}
             textStyle={textStyle}
+            headerStyle={headerStyle}
+            headerTextStyle={headerTextStyle}
           />
           <Weekdays
             styles={styles}

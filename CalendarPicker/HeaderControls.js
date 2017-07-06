@@ -20,6 +20,8 @@ export default function HeaderControls(props) {
 	previousElement,
     nextElement,
     textStyle,
+    headerStyle,
+    headerTextStyle,
   } = props;
   const MONTHS = months? months : Utils.MONTHS; // English Month Array
   // getMonth() call below will return the month number, we will use it as the
@@ -30,7 +32,7 @@ export default function HeaderControls(props) {
   const year = currentYear;
 
   return (
-    <View style={styles.headerWrapper}>
+    <View style={[styles.headerWrapper, headerStyle]}>
       <View style={styles.monthSelector}>
         <Controls
           label={previous}
@@ -41,7 +43,7 @@ export default function HeaderControls(props) {
         />
       </View>
       <View>
-        <Text style={[styles.monthLabel, textStyle]}>
+        <Text style={[styles.monthLabel, textStyle, headerTextStyle]}>
            { month } { year }
         </Text>
       </View>
