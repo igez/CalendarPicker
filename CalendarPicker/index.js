@@ -191,6 +191,8 @@ export default class CalendarPicker extends Component {
       textStyle,
       headerStyle,
       headerTextStyle,
+      weekdayStyle,
+      weekdayTextStyle,
     } = this.props;
 
     return (
@@ -220,6 +222,8 @@ export default class CalendarPicker extends Component {
             startFromMonday={startFromMonday}
             weekdays={weekdays}
             textStyle={textStyle}
+            weekdayStyle={weekdayStyle}
+            weekdayTextStyle={weekdayTextStyle}
           />
           <DaysGridView
             month={currentMonth}
