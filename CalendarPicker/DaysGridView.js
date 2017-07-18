@@ -44,15 +44,11 @@ export default function DaysGridView(props) {
         let eventMonth = obj.getMonth();
         let eventYear = obj.getFullYear();
 
-        console.log('Event day: ', eventDay, eventMonth, eventYear)
-        console.log('Day:', day, month, year);
-
         return day === eventDay && month === eventMonth && year === eventYear;
       }).length > 0;
   }
 
   function generateColumns(i) {
-    console.log('Event Days', eventDates);
     const column = guideArray.map(index => {
       if (i === 0) { // for first row, let's start showing the days on the correct weekday
         if (index >= firstWeekDay) {
