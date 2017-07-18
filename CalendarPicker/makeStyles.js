@@ -171,6 +171,12 @@ export function makeStyles(scaler, backgroundColor, textColor, todayBackgroundCo
       color: '#BBBBBB',
       marginTop: -10,
       alignSelf: 'center'
+    },
+    previousControl: {
+      alignItems: 'flex-start'
+    },
+    nextControl: {
+      alignItems: 'flex-end'
     }
   };
 }

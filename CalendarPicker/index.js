@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   View,
   Text,
   Dimensions,
   StyleSheet,
 } from 'react-native';
-import { makeStyles } from './makeStyles';
-import { Utils } from './Utils';
+import {makeStyles} from './makeStyles';
+import {Utils} from './Utils';
 import HeaderControls from './HeaderControls';
 import Weekdays from './Weekdays';
 import DaysGridView from './DaysGridView';
@@ -50,8 +50,7 @@ export default class CalendarPicker extends Component {
   componentWillReceiveProps(nextProps) {
     let newStyles = {};
     if (nextProps.width !== this.props.width ||
-        nextProps.height !== this.props.height)
-    {
+      nextProps.height !== this.props.height) {
       newStyles = this.updateScaledStyles(nextProps);
     }
 
@@ -75,7 +74,9 @@ export default class CalendarPicker extends Component {
     // The styles in makeStyles are intially scaled to this width
     const containerWidth = width ? width : Dimensions.get('window').width;
     const containerHeight = height ? height : Dimensions.get('window').height;
+
     const initialScale = Math.min(containerWidth, containerHeight) / scaleFactor;
+
     return {styles: makeStyles(initialScale, selectedDayColor, selectedDayTextColor, todayBackgroundColor)};
   }
 
@@ -102,9 +103,9 @@ export default class CalendarPicker extends Component {
     const date = new Date(currentYear, currentMonth, day);
 
     if (allowRangeSelection &&
-        selectedStartDate &&
-        date >= selectedStartDate &&
-        !selectedEndDate) {
+      selectedStartDate &&
+      date >= selectedStartDate &&
+      !selectedEndDate) {
       this.setState({
         selectedEndDate: date,
       });
@@ -121,7 +122,7 @@ export default class CalendarPicker extends Component {
   }
 
   handleOnPressPrevious() {
-    const { currentMonth, currentYear } = this.state;
+    const {currentMonth, currentYear} = this.state;
     const previousMonth = currentMonth - 1;
     // if previousMonth is negative it means the current month is January,
     // so we have to go back to previous year and set the current month to December
@@ -139,7 +140,7 @@ export default class CalendarPicker extends Component {
   }
 
   handleOnPressNext() {
-    const { currentMonth, currentYear } = this.state;
+    const {currentMonth, currentYear} = this.state;
     const nextMonth = currentMonth + 1;
     // if nextMonth is greater than 11 it means the current month is December,
     // so we have to go forward to the next year and set the current month to January
@@ -186,13 +187,14 @@ export default class CalendarPicker extends Component {
       months,
       previousTitle,
       nextTitle,
-	  previousElement,
-	  nextElement,
+      previousElement,
+      nextElement,
       textStyle,
       headerStyle,
       headerTextStyle,
       weekdayStyle,
       weekdayTextStyle,
+      toDateTextStyle
     } = this.props;
 
     return (
@@ -211,7 +213,7 @@ export default class CalendarPicker extends Component {
             months={months}
             previousTitle={previousTitle}
             nextTitle={nextTitle}
-			previousElement={previousElement}
+            previousElement={previousElement}
             nextElement={nextElement}
             textStyle={textStyle}
             headerStyle={headerStyle}
@@ -234,9 +236,10 @@ export default class CalendarPicker extends Component {
             allowRangeSelection={allowRangeSelection}
             selectedStartDate={selectedStartDate}
             selectedEndDate={selectedEndDate}
-            minDate={minDate && minDate.setHours(0,0,0,0)}
-            maxDate={maxDate && maxDate.setHours(0,0,0,0)}
+            minDate={minDate && minDate.setHours(0, 0, 0, 0)}
+            maxDate={maxDate && maxDate.setHours(0, 0, 0, 0)}
             textStyle={textStyle}
+            toDateTextStyle={toDateTextStyle}
           />
         </View>
       </Swiper>

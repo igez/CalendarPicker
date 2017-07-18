@@ -1,10 +1,10 @@
-import React, { PropTypes } from 'react';
+import React, {PropTypes} from 'react';
 import {
   View,
   Text,
   TouchableOpacity
 } from 'react-native';
-import { Utils } from './Utils';
+import {Utils} from './Utils';
 
 export default function Day(props) {
   const {
@@ -19,11 +19,12 @@ export default function Day(props) {
     textStyle,
     minDate,
     maxDate,
+    toDateTextStyle
   } = props;
 
   const thisDay = new Date(year, month, day);
   const today = new Date();
-  today.setHours(0,0,0,0);
+  today.setHours(0, 0, 0, 0);
 
   let dateOutOfRange = false;
   let daySelectedStyle = {};
@@ -46,15 +47,16 @@ export default function Day(props) {
   // If date is not out of range let's apply styles
   if (!dateOutOfRange) {
     // set today's style
-    if (Utils.compareDates(thisDay,today)) {
+    if (Utils.compareDates(thisDay, today)) {
       daySelectedStyle = styles.selectedToday;
-      selectedDayColorStyle = styles.selectedDayLabel;
+      // selectedDayColorStyle = styles.selectedDayLabel;
+      selectedDayColorStyle = toDateTextStyle;
     }
 
     // set selected day style
     if (!allowRangeSelection &&
-        selectedStartDate &&
-        Utils.compareDates(thisDay,selectedStartDate)) {
+      selectedStartDate &&
+      Utils.compareDates(thisDay, selectedStartDate)) {
       daySelectedStyle = styles.selectedDay;
       selectedDayColorStyle = styles.selectedDayLabel;
     }
@@ -62,22 +64,22 @@ export default function Day(props) {
     // Set selected ranges styles
     if (allowRangeSelection) {
       if (selectedStartDate && selectedEndDate) {
-          // Apply style for start date
-        if (Utils.compareDates(thisDay,selectedStartDate)) {
+        // Apply style for start date
+        if (Utils.compareDates(thisDay, selectedStartDate)) {
           daySelectedStyle = styles.startDayWrapper;
           selectedDayColorStyle = styles.selectedDayLabel;
         }
         // Apply style for end date
-        if (Utils.compareDates(thisDay,selectedEndDate)) {
+        if (Utils.compareDates(thisDay, selectedEndDate)) {
           daySelectedStyle = styles.endDayWrapper;
           selectedDayColorStyle = styles.selectedDayLabel;
         }
         // Apply style if start date is the same as end date
         if (Utils.compareDates(thisDay, selectedEndDate) &&
-            Utils.compareDates(thisDay, selectedStartDate) &&
-            Utils.compareDates(selectedEndDate,selectedStartDate)) {
-            daySelectedStyle = styles.selectedDay;
-            selectedDayColorStyle = styles.selectedDayLabel;
+          Utils.compareDates(thisDay, selectedStartDate) &&
+          Utils.compareDates(selectedEndDate, selectedStartDate)) {
+          daySelectedStyle = styles.selectedDay;
+          selectedDayColorStyle = styles.selectedDayLabel;
         }
         // Apply style if this day is in range
         if (Utils.isDateInRange(thisDay, selectedStartDate, selectedEndDate)) {
@@ -87,10 +89,10 @@ export default function Day(props) {
       }
       // Apply style if start date has been selected but end date has not
       if (selectedStartDate &&
-          !selectedEndDate &&
-          Utils.compareDates(thisDay, selectedStartDate)) {
-          daySelectedStyle = styles.selectedDay;
-          selectedDayColorStyle = styles.selectedDayLabel;
+        !selectedEndDate &&
+        Utils.compareDates(thisDay, selectedStartDate)) {
+        daySelectedStyle = styles.selectedDay;
+        selectedDayColorStyle = styles.selectedDayLabel;
       }
     }
   }
@@ -110,9 +112,12 @@ export default function Day(props) {
       <TouchableOpacity
         style={[styles.dayButton, daySelectedStyle]}
         onPress={() => onPressDay(day) }>
+
         <Text style={[styles.dayLabel, textStyle, selectedDayColorStyle]}>
           { day }
         </Text>
+
+
       </TouchableOpacity>
     </View>
   );

@@ -33,7 +33,7 @@ export default function HeaderControls(props) {
 
   return (
     <View style={[styles.headerWrapper, headerStyle]}>
-      <View style={styles.monthSelector}>
+      <View style={[styles.monthSelector, styles.previousControl]}>
         <Controls
           label={previous}
 		  element={previousElement}
@@ -47,7 +47,7 @@ export default function HeaderControls(props) {
            { month } { year }
         </Text>
       </View>
-      <View style={styles.monthSelector}>
+      <View style={[styles.monthSelector, styles.nextControl]}>
         <Controls
           label={next}
 		  element={nextElement}

@@ -21,6 +21,7 @@ export default function DaysGridView(props) {
     textStyle,
     minDate,
     maxDate,
+    toDateTextStyle
   } = props;
   const today = new Date();
   // let's get the total of days in this month, we need the year as well, since
@@ -56,6 +57,7 @@ export default function DaysGridView(props) {
                 minDate={minDate}
                 maxDate={maxDate}
                 textStyle={textStyle}
+                toDateTextStyle={toDateTextStyle}
               />
             );
           }
@@ -84,6 +86,7 @@ export default function DaysGridView(props) {
               minDate={minDate}
               maxDate={maxDate}
               textStyle={textStyle}
+              toDateTextStyle={toDateTextStyle}
             />
           );
         }
