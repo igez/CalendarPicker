@@ -194,7 +194,9 @@ export default class CalendarPicker extends Component {
       headerTextStyle,
       weekdayStyle,
       weekdayTextStyle,
-      toDateTextStyle
+      toDateTextStyle,
+
+      eventDates
     } = this.props;
 
     return (
@@ -240,6 +242,7 @@ export default class CalendarPicker extends Component {
             maxDate={maxDate && maxDate.setHours(0, 0, 0, 0)}
             textStyle={textStyle}
             toDateTextStyle={toDateTextStyle}
+            eventDates={eventDates}
           />
         </View>
       </Swiper>

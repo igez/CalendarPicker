@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, {PropTypes} from 'react';
 import uuid from 'uuid';
 import {
   View,
@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import Day from './Day';
 import EmptyDay from './EmptyDay';
-import { Utils } from './Utils';
+import {Utils} from './Utils';
 
 export default function DaysGridView(props) {
   const {
@@ -21,7 +21,8 @@ export default function DaysGridView(props) {
     textStyle,
     minDate,
     maxDate,
-    toDateTextStyle
+    toDateTextStyle,
+    eventDates
   } = props;
   const today = new Date();
   // let's get the total of days in this month, we need the year as well, since
@@ -35,14 +36,32 @@ export default function DaysGridView(props) {
   const firstWeekDay = firstDayOfMonth.getDay();
   // fill up an array of days with the amount of days in the current month
   const days = Array.apply(null, {length: totalDays}).map(Number.call, Number);
-  const guideArray = [ 0, 1, 2, 3, 4, 5, 6 ];
+  const guideArray = [0, 1, 2, 3, 4, 5, 6];
+
+  function checkEventDate(day, month, year) {
+    return eventDates && eventDates.length && eventDates.filter((obj, idx) => {
+        let eventDay = obj.getDate();
+        let eventMonth = obj.getMonth();
+        let eventYear = obj.getFullYear();
+
+        console.log('Event day: ', eventDay, eventMonth, eventYear)
+        console.log('Day:', day, month, year);
+
+        return day === eventDay && month === eventMonth && year === eventYear;
+      }).length > 0;
+  }
 
   function generateColumns(i) {
+    console.log('Event Days', eventDates);
     const column = guideArray.map(index => {
       if (i === 0) { // for first row, let's start showing the days on the correct weekday
         if (index >= firstWeekDay) {
           if (days.length > 0) {
-            const day= days.shift() + 1;
+            const day = days.shift() + 1;
+
+            // Check event day
+            let isEvent = checkEventDate(day, month, year);
+
             return (
               <Day
                 key={day}
@@ -58,6 +77,7 @@ export default function DaysGridView(props) {
                 maxDate={maxDate}
                 textStyle={textStyle}
                 toDateTextStyle={toDateTextStyle}
+                isEventDay={isEvent}
               />
             );
           }
@@ -71,7 +91,11 @@ export default function DaysGridView(props) {
         }
       } else {
         if (days.length > 0) {
-          const day= days.shift() + 1;
+          const day = days.shift() + 1;
+
+          // Check event day
+          let isEvent = checkEventDate(day, month, year);
+
           return (
             <Day
               key={day}
@@ -87,6 +111,7 @@ export default function DaysGridView(props) {
               maxDate={maxDate}
               textStyle={textStyle}
               toDateTextStyle={toDateTextStyle}
+              isEventDay={isEvent}
             />
           );
         }
@@ -95,13 +120,14 @@ export default function DaysGridView(props) {
     });
     return column;
   }
+
   return (
     <View style={styles.daysWrapper}>
       { guideArray.map(index => (
-          <View key={index} style={styles.weekRow}>
-            { generateColumns(index) }
-          </View>
-        ))
+        <View key={index} style={styles.weekRow}>
+          { generateColumns(index) }
+        </View>
+      ))
       }
     </View>
   );

@@ -19,7 +19,8 @@ export default function Day(props) {
     textStyle,
     minDate,
     maxDate,
-    toDateTextStyle
+    toDateTextStyle,
+    isEventDay
   } = props;
 
   const thisDay = new Date(year, month, day);
@@ -46,6 +47,11 @@ export default function Day(props) {
 
   // If date is not out of range let's apply styles
   if (!dateOutOfRange) {
+    // Style for event day
+    if(isEventDay){
+      daySelectedStyle = styles.eventStyle;
+    }
+
     // set today's style
     if (Utils.compareDates(thisDay, today)) {
       daySelectedStyle = styles.selectedToday;

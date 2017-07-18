@@ -35,7 +35,7 @@ export function makeStyles(scaler, backgroundColor, textColor, todayBackgroundCo
     dayLabel: {
       fontSize: 14*scaler,
       color: '#000',
-      marginTop: 6*scaler,
+      marginTop: 5*scaler,
       alignSelf: 'center'
     },
 
@@ -177,6 +177,16 @@ export function makeStyles(scaler, backgroundColor, textColor, todayBackgroundCo
     },
     nextControl: {
       alignItems: 'flex-end'
+    },
+    eventStyle: {
+      width: 30*scaler,
+      height:30*scaler,
+      borderRadius: 30*scaler,
+      marginTop: -10*scaler,
+      alignSelf: 'center',
+      borderColor: SELECTED_BG_COLOR,
+      borderWidth: 1,
+      backgroundColor: '#fff',
     }
   };
 }
