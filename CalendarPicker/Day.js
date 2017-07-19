@@ -47,16 +47,16 @@ export default function Day(props) {
 
   // If date is not out of range let's apply styles
   if (!dateOutOfRange) {
-    // Style for event day
-    if(isEventDay){
-      daySelectedStyle = styles.eventStyle;
-    }
-
     // set today's style
     if (Utils.compareDates(thisDay, today)) {
       daySelectedStyle = styles.selectedToday;
       // selectedDayColorStyle = styles.selectedDayLabel;
       selectedDayColorStyle = toDateTextStyle;
+    }
+
+    // Style for event day
+    if(isEventDay) {
+      daySelectedStyle = styles.eventStyle;
     }
 
     // set selected day style
