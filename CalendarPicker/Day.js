@@ -55,7 +55,7 @@ export default function Day(props) {
     }
 
     // Style for event day
-    if(isEventDay) {
+    if (isEventDay) {
       daySelectedStyle = styles.eventStyle;
     }
 

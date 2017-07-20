@@ -23,10 +23,11 @@ const swipeConfig = {
 export default class CalendarPicker extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      currentMonth: null,
-      currentYear: null,
-      selectedStartDate: null,
+      currentMonth: props.selectedDate ? props.selectedDate.getMonth() : null,
+      currentYear: props.selectedDate ? props.selectedDate.getFullYear() : null,
+      selectedStartDate: props.selectedDate ? props.selectedDate : null,
       selectedEndDate: null,
       styles: {},
     };
@@ -55,11 +56,19 @@ export default class CalendarPicker extends Component {
     }
 
     let newMonthYear = {}
+
     if (nextProps.initialDate.getTime() !== this.props.initialDate.getTime()) {
       this.updateMonthYear(nextProps, {});
     }
 
     this.setState({...newStyles, ...newMonthYear});
+  }
+
+  componentDidMount() {
+    // propagate to parent date has changed
+    if (this.props.selectedDate) {
+      this.handleOnPressDay(this.props.selectedDate.getDate(), Utils.START_DATE);
+    }
   }
 
   updateScaledStyles(props) {
@@ -69,6 +78,8 @@ export default class CalendarPicker extends Component {
       selectedDayTextColor,
       todayBackgroundColor,
       width, height,
+      circleDayHeight,
+      textStyle
     } = props;
 
     // The styles in makeStyles are intially scaled to this width
@@ -77,7 +88,7 @@ export default class CalendarPicker extends Component {
 
     const initialScale = Math.min(containerWidth, containerHeight) / scaleFactor;
 
-    return {styles: makeStyles(initialScale, selectedDayColor, selectedDayTextColor, todayBackgroundColor)};
+    return {styles: makeStyles(initialScale, selectedDayColor, selectedDayTextColor, todayBackgroundColor, circleDayHeight, textStyle.fontSize)};
   }
 
   updateMonthYear(props) {
@@ -169,6 +180,7 @@ export default class CalendarPicker extends Component {
   }
 
   render() {
+
     const {
       currentMonth,
       currentYear,
@@ -195,8 +207,9 @@ export default class CalendarPicker extends Component {
       weekdayStyle,
       weekdayTextStyle,
       toDateTextStyle,
+      eventDates,
 
-      eventDates
+      selectedDate
     } = this.props;
 
     return (
