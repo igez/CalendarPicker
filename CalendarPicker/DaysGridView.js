@@ -22,6 +22,11 @@ export default function DaysGridView(props) {
     minDate,
     maxDate,
     toDateTextStyle,
+    dayOfPreviousMonthStyle,
+
+    showDayOfPreviousMonth,
+    onPressDayOfPreviousMonth,
+    onPressDayOfNextMonth,
     eventDates
   } = props;
   const today = new Date();
@@ -38,6 +43,9 @@ export default function DaysGridView(props) {
   const days = Array.apply(null, {length: totalDays}).map(Number.call, Number);
   const guideArray = [0, 1, 2, 3, 4, 5, 6];
 
+  let firstWeekDayOfNextMonth = startFromMonday ? new Date(year, month + 1, 0).getDay() : new Date(year, month + 1, 1).getDay();
+  let startDay = 0;
+
   function checkEventDate(day, month, year) {
     return eventDates && eventDates.length && eventDates.filter((obj, idx) => {
         let eventDay = obj.getDate();
@@ -51,13 +59,18 @@ export default function DaysGridView(props) {
   function generateColumns(i) {
     const column = guideArray.map(index => {
       if (i === 0) { // for first row, let's start showing the days on the correct weekday
+        let calendarStart = new Date(year, month, 1);
+
+        calendarStart.setDate(calendarStart.getDate() - firstWeekDay);
+
+        let firstEmptyDate = calendarStart.getDate();
+
         if (index >= firstWeekDay) {
           if (days.length > 0) {
             const day = days.shift() + 1;
 
             // Check event day
             let isEvent = checkEventDate(day, month, year);
-
             return (
               <Day
                 key={day}
@@ -80,8 +93,12 @@ export default function DaysGridView(props) {
         } else {
           return (
             <EmptyDay
+              dayOfPreviousMonthStyle={dayOfPreviousMonthStyle}
+              showDayOfPreviousMonth={showDayOfPreviousMonth}
               key={uuid()}
               styles={styles}
+              day={firstEmptyDate + index}
+              onPressDay={onPressDayOfPreviousMonth}
             />
           );
         }
@@ -110,9 +127,23 @@ export default function DaysGridView(props) {
               isEventDay={isEvent}
             />
           );
+        } else {
+          if (firstWeekDayOfNextMonth > 0 && firstWeekDayOfNextMonth < guideArray.length) {
+            firstWeekDayOfNextMonth = firstWeekDayOfNextMonth + 1;
+            startDay = startDay + 1;
+            return (
+              <EmptyDay
+                dayOfPreviousMonthStyle={dayOfPreviousMonthStyle}
+                showDayOfPreviousMonth={showDayOfPreviousMonth}
+                key={uuid()}
+                styles={styles}
+                day={startDay}
+                onPressDay={onPressDayOfNextMonth}
+              />
+            );
+          }
         }
       }
-
     });
     return column;
   }

@@ -37,6 +37,8 @@ export default class CalendarPicker extends Component {
     this.handleOnPressNext = this.handleOnPressNext.bind(this);
     this.handleOnPressDay = this.handleOnPressDay.bind(this);
     this.onSwipe = this.onSwipe.bind(this);
+    this.handleOnPressDayOfPreviousMonth = this.handleOnPressDayOfPreviousMonth.bind(this);
+    this.handleOnPressDayOfNextMonth = this.handleOnPressDayOfNextMonth.bind(this);
   }
 
   static defaultProps = {
@@ -179,6 +181,80 @@ export default class CalendarPicker extends Component {
     }
   }
 
+  handleOnPressDayOfPreviousMonth(day) {
+    const {
+      currentYear,
+      currentMonth,
+    } = this.state;
+
+    const {
+      onDateChange
+    } = this.props;
+
+    const previousMonth = currentMonth - 1;
+
+    // if previousMonth is negative it means the current month is January,
+    // so we have to go back to previous year and set the current month to December
+
+    let date = null;
+
+    if (previousMonth < 0) {
+      date = new Date(parseInt(currentYear) - 1, 11, day);
+      this.setState({
+        currentMonth: parseInt(11), // setting month to December
+        currentYear: parseInt(currentYear) - 1, // decrement year
+        selectedStartDate: date
+      });
+    } else {
+      date = new Date(parseInt(currentYear), parseInt(previousMonth), day);
+      this.setState({
+        currentMonth: parseInt(previousMonth),
+        currentYear: parseInt(currentYear),
+        selectedStartDate: date
+      });
+    }
+
+    // propagate to parent date has changed
+    onDateChange(date, Utils.START_DATE);
+  }
+
+  handleOnPressDayOfNextMonth(day) {
+    const {
+      currentYear,
+      currentMonth,
+    } = this.state;
+
+    const {
+      onDateChange
+    } = this.props;
+
+    const nextMonth = currentMonth + 1;
+
+    // if previousMonth is negative it means the current month is January,
+    // so we have to go back to previous year and set the current month to December
+
+    let date = null;
+
+    if (nextMonth > 11) {
+      date = new Date(parseInt(currentYear) + 1, 0, day);
+      this.setState({
+        currentMonth: parseInt(0), // setting month to December
+        currentYear: parseInt(currentYear) + 1, // decrement year
+        selectedStartDate: date
+      });
+    } else {
+      date = new Date(parseInt(currentYear), parseInt(nextMonth), day);
+      this.setState({
+        currentMonth: parseInt(nextMonth),
+        currentYear: parseInt(currentYear),
+        selectedStartDate: date
+      });
+    }
+
+    // propagate to parent date has changed
+    onDateChange(date, Utils.START_DATE);
+  }
+
   render() {
 
     const {
@@ -207,11 +283,13 @@ export default class CalendarPicker extends Component {
       weekdayStyle,
       weekdayTextStyle,
       toDateTextStyle,
-      eventDates,
+      dayOfPreviousMonthStyle,
 
+      eventDates,
       selectedDate
     } = this.props;
 
+    let showDayOfPreviousMonth = this.props.showDayOfPreviousMonth || true;
     return (
       <Swiper
         onSwipe={(direction) => this.onSwipe(direction)}
@@ -256,6 +334,10 @@ export default class CalendarPicker extends Component {
             textStyle={textStyle}
             toDateTextStyle={toDateTextStyle}
             eventDates={eventDates}
+            dayOfPreviousMonthStyle={dayOfPreviousMonthStyle}
+            showDayOfPreviousMonth={showDayOfPreviousMonth}
+            onPressDayOfPreviousMonth={this.handleOnPressDayOfPreviousMonth}
+            onPressDayOfNextMonth={this.handleOnPressDayOfNextMonth}
           />
         </View>
       </Swiper>
