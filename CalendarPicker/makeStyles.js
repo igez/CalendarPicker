@@ -8,7 +8,17 @@ const DEFAULT_SELECTED_BACKGROUND_COLOR = '#5ce600';
 const DEFAULT_SELECTED_TEXT_COLOR = '#000000';
 const DEFAULT_TODAY_BACKGROUD_COLOR = '#CCCCCC';
 
-export function makeStyles(scaler, backgroundColor, textColor, todayBackgroundColor, circleDayHeight, dayFontSize) {
+export function makeStyles(
+  scaler,
+  backgroundColor,
+  textColor,
+  todayBackgroundColor,
+  circleDayHeight,
+  dayFontSize,
+  eventStyle = {},
+  selectedTodayStyle = {},
+  selectedDayStyle = {}
+) {
   const SELECTED_BG_COLOR = backgroundColor ? backgroundColor : DEFAULT_SELECTED_BACKGROUND_COLOR;
   const SELECTED_TEXT_COLOR = textColor ? textColor : DEFAULT_SELECTED_TEXT_COLOR;
   const TODAY_BG_COLOR = todayBackgroundColor ? todayBackgroundColor : DEFAULT_TODAY_BACKGROUD_COLOR;
@@ -24,7 +34,7 @@ export function makeStyles(scaler, backgroundColor, textColor, todayBackgroundCo
       width: 50 * scaler,
       height: 40 * scaler,
       alignSelf: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
     },
 
     dayButtonSelected: {
@@ -32,7 +42,7 @@ export function makeStyles(scaler, backgroundColor, textColor, todayBackgroundCo
       height: DEFAULT_WIDTH,
       borderRadius: DEFAULT_WIDTH / 2,
       backgroundColor: SELECTED_BG_COLOR,
-      alignSelf: 'center'
+      alignSelf: 'center',
     },
 
     dayLabel: {
@@ -74,7 +84,8 @@ export function makeStyles(scaler, backgroundColor, textColor, todayBackgroundCo
       height: DEFAULT_WIDTH,
       backgroundColor: SELECTED_BG_COLOR,
       borderRadius: DEFAULT_WIDTH,
-      alignSelf: 'center'
+      alignSelf: 'center',
+      ...selectedDayStyle
     },
 
     selectedToday: {
@@ -82,7 +93,8 @@ export function makeStyles(scaler, backgroundColor, textColor, todayBackgroundCo
       height: DEFAULT_WIDTH,
       backgroundColor: TODAY_BG_COLOR,
       borderRadius: DEFAULT_WIDTH,
-      alignSelf: 'center'
+      alignSelf: 'center',
+      ...selectedTodayStyle
     },
 
     dayWrapper: {
@@ -184,6 +196,7 @@ export function makeStyles(scaler, backgroundColor, textColor, todayBackgroundCo
       borderColor: SELECTED_BG_COLOR,
       borderWidth: 1,
       backgroundColor: '#fff',
+      ...eventStyle
     }
   };
 }

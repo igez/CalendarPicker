@@ -20,7 +20,8 @@ export default function Day(props) {
     minDate,
     maxDate,
     toDateTextStyle,
-    isEventDay
+    isEventDay,
+    hasEventCustomComponent
   } = props;
 
   const thisDay = new Date(year, month, day);
@@ -30,7 +31,9 @@ export default function Day(props) {
   let dateOutOfRange = false;
   let daySelectedStyle = {};
   let selectedDayColorStyle = {};
-  let dateType;
+  const todayDate = Utils.compareDates(thisDay, today)
+  console.log('_AA_', selectedStartDate)
+  const selectedDate = selectedStartDate ? Utils.compareDates(thisDay, selectedStartDate) : false
 
   // First let's check if date is out of range
   if (minDate) {
@@ -47,16 +50,19 @@ export default function Day(props) {
 
   // If date is not out of range let's apply styles
   if (!dateOutOfRange) {
-    // set today's style
-    if (Utils.compareDates(thisDay, today)) {
-      daySelectedStyle = styles.selectedToday;
-      // selectedDayColorStyle = styles.selectedDayLabel;
-      selectedDayColorStyle = toDateTextStyle;
-    }
-
     // Style for event day
     if (isEventDay) {
       daySelectedStyle = styles.eventStyle;
+    }
+
+    // set today's style
+    if (todayDate) {
+      daySelectedStyle = {
+        ...daySelectedStyle,
+        ...styles.selectedToday
+      };
+      // selectedDayColorStyle = styles.selectedDayLabel;
+      selectedDayColorStyle = toDateTextStyle;
     }
 
     // set selected day style
@@ -118,12 +124,10 @@ export default function Day(props) {
       <TouchableOpacity
         style={[styles.dayButton, daySelectedStyle]}
         onPress={() => onPressDay(day) }>
-
         <Text style={[styles.dayLabel, textStyle, selectedDayColorStyle]}>
           { day }
         </Text>
-
-
+        { !selectedDate && !!isEventDay && (hasEventCustomComponent) }
       </TouchableOpacity>
     </View>
   );

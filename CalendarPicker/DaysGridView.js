@@ -27,7 +27,8 @@ export default function DaysGridView(props) {
     showDayOfPreviousMonth,
     onPressDayOfPreviousMonth,
     onPressDayOfNextMonth,
-    eventDates
+    eventDates,
+    hasEventCustomComponent
   } = props;
   const today = new Date();
   // let's get the total of days in this month, we need the year as well, since
@@ -87,6 +88,7 @@ export default function DaysGridView(props) {
                 textStyle={textStyle}
                 toDateTextStyle={toDateTextStyle}
                 isEventDay={isEvent}
+                hasEventCustomComponent={hasEventCustomComponent}
               />
             );
           }
@@ -125,6 +127,7 @@ export default function DaysGridView(props) {
               textStyle={textStyle}
               toDateTextStyle={toDateTextStyle}
               isEventDay={isEvent}
+              hasEventCustomComponent={hasEventCustomComponent}
             />
           );
         } else {

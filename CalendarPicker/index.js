@@ -44,6 +44,10 @@ export default class CalendarPicker extends Component {
   static defaultProps = {
     initialDate: new Date(),
     scaleFactor: 375,
+    eventStyle: {},
+    selectedTodayStyle: {},
+    selectedDayStyle: {},
+    hasEventCustomComponent: undefined
   }
 
   componentWillMount() {
@@ -81,7 +85,10 @@ export default class CalendarPicker extends Component {
       todayBackgroundColor,
       width, height,
       circleDayHeight,
-      textStyle
+      textStyle,
+      eventStyle,
+      selectedTodayStyle,
+      selectedDayStyle
     } = props;
 
     // The styles in makeStyles are intially scaled to this width
@@ -90,7 +97,17 @@ export default class CalendarPicker extends Component {
 
     const initialScale = Math.min(containerWidth, containerHeight) / scaleFactor;
 
-    return {styles: makeStyles(initialScale, selectedDayColor, selectedDayTextColor, todayBackgroundColor, circleDayHeight, textStyle.fontSize)};
+    return {styles: makeStyles(
+      initialScale,
+      selectedDayColor,
+      selectedDayTextColor,
+      todayBackgroundColor,
+      circleDayHeight,
+      textStyle.fontSize,
+      eventStyle,
+      selectedTodayStyle,
+      selectedDayStyle
+    )};
   }
 
   updateMonthYear(props) {
@@ -281,9 +298,8 @@ export default class CalendarPicker extends Component {
       weekdayTextStyle,
       toDateTextStyle,
       dayOfPreviousMonthStyle,
-
       eventDates,
-      selectedDate
+      hasEventCustomComponent
     } = this.props;
 
     let showDayOfPreviousMonth = this.props.showDayOfPreviousMonth || true;
@@ -335,6 +351,7 @@ export default class CalendarPicker extends Component {
             showDayOfPreviousMonth={showDayOfPreviousMonth}
             onPressDayOfPreviousMonth={this.handleOnPressDayOfPreviousMonth}
             onPressDayOfNextMonth={this.handleOnPressDayOfNextMonth}
+            hasEventCustomComponent={hasEventCustomComponent}
           />
         </View>
       </Swiper>
