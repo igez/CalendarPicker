@@ -32,7 +32,6 @@ export default function Day(props) {
   let daySelectedStyle = {};
   let selectedDayColorStyle = {};
   const todayDate = Utils.compareDates(thisDay, today)
-  console.log('_AA_', selectedStartDate)
   const selectedDate = selectedStartDate ? Utils.compareDates(thisDay, selectedStartDate) : false
 
   // First let's check if date is out of range
