@@ -212,28 +212,34 @@ export default class CalendarPicker extends Component {
     // so we have to go back to previous year and set the current month to December
 
     let date = null;
+    let next = true;
 
     if (previousMonth < 0) {
       date = new Date(parseInt(currentYear) - 1, 11, day);
-      this.setState({
-        currentMonth: parseInt(11), // setting month to December
-        currentYear: parseInt(currentYear) - 1, // decrement year
-        selectedStartDate: date
-      });
+      if (!!minDate && minDate.getTime() > date.getTime()) {
+        next = false;
+      }
+      if (next) {
+        this.setState({
+          currentMonth: parseInt(11), // setting month to December
+          currentYear: parseInt(currentYear) - 1, // decrement year
+          selectedStartDate: date
+        });
+      }
     } else {
       date = new Date(parseInt(currentYear), parseInt(previousMonth), day);
-      this.setState({
-        currentMonth: parseInt(previousMonth),
-        currentYear: parseInt(currentYear),
-        selectedStartDate: date
-      });
+      if (!!minDate && minDate.getTime() > date.getTime()) {
+        next = false;
+      }
+      if (next) {
+        this.setState({
+          currentMonth: parseInt(previousMonth),
+          currentYear: parseInt(currentYear),
+          selectedStartDate: date
+        });
+      }
     }
 
-    let next = true;
-    if (!!minDate && minDate.getTime() > date.getTime()) {
-      next = false;
-    }
-        
     if (next) {
       // propagate to parent date has changed
       onDateChange(date, Utils.START_DATE);
