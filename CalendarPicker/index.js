@@ -202,7 +202,8 @@ export default class CalendarPicker extends Component {
     } = this.state;
 
     const {
-      onDateChange
+      onDateChange,
+      minDate
     } = this.props;
 
     const previousMonth = currentMonth - 1;
@@ -228,8 +229,15 @@ export default class CalendarPicker extends Component {
       });
     }
 
-    // propagate to parent date has changed
-    onDateChange(date, Utils.START_DATE);
+    let next = true;
+    if (!!minDate && mindate.getTime() > date.getTime()) {
+      next = false;
+    }
+        
+    if (next) {
+      // propagate to parent date has changed
+      onDateChange(date, Utils.START_DATE);
+    }
   }
 
   handleOnPressDayOfNextMonth(day) {
