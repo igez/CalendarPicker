@@ -230,7 +230,7 @@ export default class CalendarPicker extends Component {
     }
 
     let next = true;
-    if (!!minDate && mindate.getTime() > date.getTime()) {
+    if (!!minDate && minDate.getTime() > date.getTime()) {
       next = false;
     }
         
