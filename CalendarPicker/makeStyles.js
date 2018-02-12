@@ -177,9 +177,8 @@ export function makeStyles(
     },
 
     disabledText: {
-      fontSize: 14 * scaler,
+      fontSize: DEFAULT_DAY_FONTSIZE,
       color: '#BBBBBB',
-      marginTop: -10,
       alignSelf: 'center'
     },
     previousControl: {
